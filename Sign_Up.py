@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_extras.switch_page_button import switch_page
 
 # Dicionário de associação entre categorias e gêneros
 categories_to_genres = {
@@ -36,6 +37,11 @@ categories_to_genres = {
     'Notícias e Revistas': ['Notícias e Revistas'],
     'Mapas e Navegação': ['Mapas e Navegação'],
 }
+
+st.set_page_config(
+    page_title="Sign Up",
+    page_icon="👋",
+)
 
 def get_genres_for_category(category):
     return categories_to_genres.get(category, [])
@@ -98,6 +104,8 @@ def signup():
             col1.write(f"Preço Máximo: {max_price}")
         col1.write(f"Classificação de Conteúdo: {selected_content_rating}")
         col1.write(f"Gênero: {selected_genre}")
+
+        switch_page("Recommend Apps")
 
     # Ajustando a posição e tamanho da imagem
     col2.image("images/AppCentral logo.png", width=300)
