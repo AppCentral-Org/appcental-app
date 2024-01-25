@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
+from services.app_service import RequestSender
 
 # Dicionário de associação entre categorias e gêneros
 categories_to_genres = {
@@ -37,6 +38,8 @@ categories_to_genres = {
     'Notícias e Revistas': ['Notícias e Revistas'],
     'Mapas e Navegação': ['Mapas e Navegação'],
 }
+
+app_serv = RequestSender('http://127.0.0.1:5000')
 
 st.set_page_config(
     page_title="Sign Up",
@@ -95,6 +98,24 @@ def signup():
 
     # Button for sign up
     if col1.button("Cadastrar"):
+        attributes = {
+                'category': selected_category, 
+                'type': selected_type,
+                'price': max_price,
+                'content_rating': selected_content_rating,
+                'genres': selected_genre,
+            }
+        
+        print(app_serv.send_request(attributes))
+        recommendations = app_serv.send_request(attributes)['recommendations']
+        st.session_state.recommendations = recommendations
+        st.session_state.user_name = name
+
+        switch_page("Recommend Apps")
+
+        # Armazene as recomendações em session_state
+        
+
         # Perform actions when the button is clicked
         col1.success("Cadastro realizado com sucesso!")
         col1.write(f"Nome: {name}")
@@ -105,7 +126,6 @@ def signup():
         col1.write(f"Classificação de Conteúdo: {selected_content_rating}")
         col1.write(f"Gênero: {selected_genre}")
 
-        switch_page("Recommend Apps")
 
     # Ajustando a posição e tamanho da imagem
     col2.image("images/AppCentral logo.png", width=300)
