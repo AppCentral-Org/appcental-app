@@ -3,41 +3,67 @@ from streamlit_extras.switch_page_button import switch_page
 from services.app_service import RequestSender
 
 # Dicionário de associação entre categorias e gêneros
-categories_to_genres = {
-    'Arte e Design': ['Arte e Design', 'Arte e Design - Pretend Play', 'Arte e Design - Criatividade', 'Arte e Design - Ação e Aventura'],
-    'Auto e Veículos': ['Auto e Veículos'],
-    'Beleza': ['Beleza'],
-    'Livros e Referências': ['Livros e Referências', 'Livros e Referências - Criatividade', 'Livros e Referências - Educação'],
-    'Negócios': ['Negócios'],
-    'Quadrinhos': ['Quadrinhos', 'Quadrinhos - Criatividade'],
-    'Comunicação': ['Comunicação', 'Comunicação - Criatividade'],
-    'Encontros': ['Encontros'],
-    'Educação': ['Educação - Educação', 'Educação', 'Educação - Criatividade', 'Educação - Música e Vídeo', 'Educação - Ação e Aventura', 'Educação - Pretend Play', 'Educação - Jogos Cerebrais'],
-    'Entretenimento': ['Entretenimento', 'Entretenimento - Música e Vídeo', 'Entretenimento - Jogos Cerebrais', 'Entretenimento - Criatividade', 'Entretenimento - Educação', 'Entretenimento - Pretend Play'],
-    'Eventos': ['Eventos'],
-    'Finanças': ['Finanças'],
-    'Comida e Bebida': ['Comida e Bebida'],
-    'Saúde e Fitness': ['Saúde e Fitness', 'Saúde e Fitness - Ação e Aventura', 'Saúde e Fitness - Educação'],
-    'Casa e Família': ['Casa e Família'],
-    'Bibliotecas e Demonstração': ['Bibliotecas e Demonstração'],
-    'Estilo de Vida': ['Estilo de Vida', 'Estilo de Vida - Pretend Play', 'Estilo de Vida - Educação'],
-    'Jogos': ['Jogos', 'Jogos - Ação e Aventura', 'Jogos - Educação', 'Jogos Cerebrais'],
-    'Família': ['Família'],
-    'Médicos': ['Médico'],
-    'Social': ['Social'],
-    'Compras': ['Compras'],
-    'Fotografia': ['Fotografia'],
-    'Esportes': ['Esportes', 'Esportes - Ação e Aventura'],
-    'Viagem e Local': ['Viagem e Local', 'Viagem e Local - Ação e Aventura'],
-    'Ferramentas': ['Ferramentas', 'Ferramentas - Educação'],
-    'Personalização': ['Personalização'],
-    'Produtividade': ['Produtividade'],
-    'Paternidade': ['Paternidade', 'Paternidade - Música e Vídeo', 'Paternidade - Educação', 'Paternidade - Jogos Cerebrais'],
-    'Clima': ['Clima'],
-    'Reprodutores de Vídeo': ['Reprodutores de Vídeo', 'Reprodutores de Vídeo - Música e Vídeo', 'Reprodutores de Vídeo - Criatividade'],
-    'Notícias e Revistas': ['Notícias e Revistas'],
-    'Mapas e Navegação': ['Mapas e Navegação'],
-}
+categories_to_genres = {'Arte e Design': ['Arte e Design', 'Arte e Design - Pretend Play', 'Arte e Design - Ação e Aventura'], 
+                        'Auto e Veículos': ['Auto e Veículos'], 
+                        'Beleza': ['Beleza'], 
+                        'Livros e Referências': ['Livros e Referências'], 
+                        'Negócios': ['Negócios'], 
+                        'Quadrinhos': ['Quadrinhos', 'Quadrinhos - Criatividade'], 
+                        'Comunicação': ['Comunicação', 'Comunicação - Criatividade'], 
+                        'Educação': ['Educação - Educação', 'Educação', 'Educação - Pretend Play'], 
+                        'Entretenimento': ['Entretenimento', 'Entretenimento - Música e Vídeo', 
+                                           'Entretenimento - Educação'], 
+                        'Eventos': ['Eventos'], 
+                        'Finanças': ['Finanças'], 
+                        'Comida e Bebida': ['Comida e Bebida'], 
+                        'Saúde e Fitness': ['Saúde e Fitness', 
+                                            'Saúde e Fitness - Ação e Aventura', 'Saúde e Fitness - Educação'], 
+                        'Casa e Família': ['Casa e Família'], 
+                        'Bibliotecas e Demonstração': ['Bibliotecas e Demonstração'], 
+                        'Estilo de Vida': ['Estilo de Vida', 'Estilo de Vida - Pretend Play', 'Estilo de Vida - Educação'], 
+                        'Médicos': ['Médico'], 
+                        'Social': ['Social'], 
+                        'Compras': ['Compras'], 
+                        'Fotografia': ['Fotografia'], 
+                        'Esportes': ['Esportes'], 
+                        'Viagem e Local': ['Viagem e Local', 'Viagem e Local - Ação e Aventura'], 
+                        'Ferramentas': ['Ferramentas', 'Ferramentas - Educação'], 
+                        'Personalização': ['Personalização'], 
+                        'Produtividade': ['Produtividade'], 
+                        'Paternidade': ['Paternidade', 'Paternidade - Jogos Cerebrais'], 
+                        'Clima': ['Clima'], 
+                        'Notícias e Revistas': ['Notícias e Revistas'], 
+                        'Mapas e Navegação': ['Mapas e Navegação']}
+
+category_mapping = {'FAMILY': 0.0, 
+                    'GAME': 0.03, 
+                    'TOOLS': 0.06, 
+                    'BUSINESS': 0.1, 
+                    'MEDICAL': 0.13, 
+                    'PRODUCTIVITY': 0.16, 
+                    'PERSONALIZATION': 0.19, 
+                    'LIFESTYLE': 0.23, 
+                    'FINANCE': 0.26, 
+                    'SPORTS': 0.29, 
+                    'COMMUNICATION': 0.32, 
+                    'HEALTH_AND_FITNESS': 0.35, 
+                    'PHOTOGRAPHY': 0.39, 
+                    'NEWS_AND_MAGAZINES': 0.42, 
+                    'BOOKS_AND_REFERENCE': 0.45, 
+                    'TRAVEL_AND_LOCAL': 0.48, 
+                    'SHOPPING': 0.52, 
+                    'SOCIAL': 0.55, 
+                    'VIDEO_PLAYERS': 0.58, 
+                    'MAPS_AND_NAVIGATION': 0.61, 
+                    'EDUCATION': 0.65, 
+                    'FOOD_AND_DRINK': 0.68, 
+                    'ENTERTAINMENT': 0.71, 
+                    'AUTO_AND_VEHICLES': 0.74, 
+                    'LIBRARIES_AND_DEMO': 0.77, 
+                    'WEATHER': 0.81, 
+                    'HOUSE_AND_HOME': 0.84, 
+                    'EVENTS': 0.87, 'ART_AND_DESIGN': 0.9, 'PARENTING': 0.94, 'BEAUTY': 0.97, 'COMICS': 1.0}
+
 
 app_serv = RequestSender('http://127.0.0.1:5000')
 
@@ -83,10 +109,10 @@ def signup():
     if selected_type == 'Pago':
         max_price = col1.slider("Preço Máximo", min_value=0.0, max_value=400.0, value=1.0, step=0.1)
     else:
-        max_price = None
+        max_price = 0
 
     # Select box for content rating
-    content_ratings = ['Todos', 'Adolescentes', 'Todos 10+', 'Mature 17+', 'Adultos 18+', 'Não Classificado']
+    content_ratings = ['Todos', 'Adolescentes', 'Todos 10+', 'Não Classificado']
     selected_content_rating = col1.selectbox("Classificação de Conteúdo", content_ratings)
 
     # Select box for genre based on the selected category
@@ -107,6 +133,10 @@ def signup():
             }
         
         print(app_serv.send_request(attributes))
+        user_name = {
+            'user_name': name
+        }
+        print(app_serv.send_user_name(user_name))
         recommendations = app_serv.send_request(attributes)['recommendations']
         st.session_state.recommendations = recommendations
         st.session_state.user_name = name
