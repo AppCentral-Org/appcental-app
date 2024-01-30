@@ -5,7 +5,6 @@ from services.app_service import RequestSender
 # Dicionário de associação entre categorias e gêneros
 categories_to_genres = {'Arte e Design': ['Arte e Design', 'Arte e Design - Pretend Play', 'Arte e Design - Ação e Aventura'], 
                         'Auto e Veículos': ['Auto e Veículos'], 
-                        'Beleza': ['Beleza'], 
                         'Livros e Referências': ['Livros e Referências'], 
                         'Negócios': ['Negócios'], 
                         'Quadrinhos': ['Quadrinhos', 'Quadrinhos - Criatividade'], 
